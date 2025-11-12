@@ -17,8 +17,8 @@ export const arcjetProtection = async (req ,res, next) => {
 
         if(decision.results.some(isSpoofedBot)){
             return res.status(403).json({
-                error: "spoofedBot dectected",
-                message: "Malicious activity dectected"
+                error: "spoofedBot detected",
+                message: "Malicious activity detected"
             })
         }
 
