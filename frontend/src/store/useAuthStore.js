@@ -1,10 +1,9 @@
-// frontend/store/useAuthStore.js
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 
-const BASE_URL = "https://chat-application-1-9y1y.onrender.com";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
@@ -16,7 +15,7 @@ export const useAuthStore = create((set, get) => ({
 
   checkAuth: async () => {
     try {
-      const res = await axiosInstance.get("/auth/check");
+      const res = await axiosInstance.get("/api/auth/check");
       set({ authUser: res.data });
       if (res.data) get().connectSocket();
     } catch {
@@ -29,7 +28,7 @@ export const useAuthStore = create((set, get) => ({
   signup: async (data) => {
     set({ isSigningup: true });
     try {
-      const res = await axiosInstance.post("/auth/signup", data);
+      const res = await axiosInstance.post("/api/auth/signup", data);
       set({ authUser: res.data });
       toast.success("Account created successfully");
 
@@ -44,7 +43,7 @@ export const useAuthStore = create((set, get) => ({
   login: async (data) => {
     set({ isLoggedIn: true });
     try {
-      const res = await axiosInstance.post("/auth/signin", data);
+      const res = await axiosInstance.post("/api/auth/signin", data);
       set({ authUser: res.data });
       toast.success("Logged in successfully");
 
@@ -58,7 +57,7 @@ export const useAuthStore = create((set, get) => ({
 
   logout: async () => {
     try {
-      await axiosInstance.post("/auth/logout");
+      await axiosInstance.post("/api/auth/logout");
 
       get().disconnectSocket();
       set({ authUser: null, onlineUsers: [] });
