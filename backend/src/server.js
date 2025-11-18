@@ -19,8 +19,8 @@ app.use(cors({
 app.use(express.urlencoded({extended: true, limit: "10mb"}))
 app.use(cookieParser())
 
-app.use('/api/auth', authRoutes)
-app.use('/api/message', messageRoutes)
+app.use('/auth', authRoutes)
+app.use('/message', messageRoutes)
 
 
 server.listen(PORT, () => {
